@@ -1,0 +1,207 @@
+Hiểu về khái niệm SPA/MPA ==>OK 
+    SPA ==>CSR (Client Side rendering) ==> bên phía người dùng render ra giao diện 
+        - Hiệu suất người dùng cũng như là trải nghiệm người dùng tăng cao 
+        - load API từ đầu nên là nhanh chóng chuyển đỏi giữa các components
+        - có thể thực hiện nhanh do có thể làm song song cả back end và front end, thậm chí có thể triển khai mobile và kéo API phía 
+        backend về
+        - 
+    MPA ==SSR (Server Side rendering) ==> bên phía server ra giao diên và gửi cho client
+        - dễ dàng , nhanh chóng triển khai cũng như là cần nhân sự ít
+        - mô hình MVC
+        - nhiều link và load nhiều API cho mỗi hành động 
+Ôn lại JS  ==> OK
+    - Arrow function không thể làm constructor
+    - Arrow function không có context ( không thể sử dụng this vì nó không biết( ngu thấy ớn =))
+
+    - Khi được làm parameter trong mảng thì rest sẽ trở thành mảng
+    - Nếu mà muốn ghép 2 object hay mảng lại với nhau thì {...{a,b,c},...{d,e,f}}
+    - Khi dùng Spread operator với mảng thì các phần tử giống nhau sẽ không bị loại bỏ.
+    - tách module ra và gộp lạ
+    - tham trị (lấy tới giá trị và sửa giá trị ) 
+    - tham chiếu (trỏ tới địa chỉ của biến đó và lấy giá trị )
+NPM là gì ?
+    - Node Package manager ==> quản lý thư viện JS 
+    - github => npm 
+React note
+    - không thể bỏ 2 elements trong một JSXElemnt - nếu muốn thì phải bọc trong Fragment
+    - Thông thường chúng ta sẽ sử dụng map để render 1 danh sách element
+    -  Giá trị của các event property là 1 callback
+    - JSX không cho phép dấu [] trong component 
+    - props Default luôn là true nếu không gán false cho nó
+    - children sẽ trờ thành props
+Link doc
+    - https://legacy.reactjs.org/docs/introducing-jsx.html
+    - https://react.dev/learn
+    - https://reactgo.com/react-get-input-value/
+
+NodeJS :
+    - Là một Javascript runtime - môi trường để chạy Javascript
+    - Là một Javascript Runtime. Khi cài NodeJS sẽ tạo ra môi trường độc lập
+    để có thể thực thi code javascript.
+    Sam at
+
+    - npm i react react-dom => dependencies
+
+    — npm install --save-dev react react-dom => devDependencies
+    — npm i -D react react-dom => devDependencies
+
+    - npm uninstall react react-dom
+
+    Global Scopes:
+    - npm uninstall -g react-create-app 
+
+    ==> nếu mà muốn chạy một thư viện nào đó mà không muốn tải về
+    mà muốn dùng xong thì xóa liền thư viện đó thì xài npx
+
+    Yarn vs npm ==> Yarn thì theo cơ chế cài song song còn npm theo cơ chế cài tuần tự 
+    yarn cache ok hơn npm => dung lượng lớn
+
+Hiểu về khái niệm hooks
+    - Là hàm - là những cái method có sẵn để mình sử dụng để những function component 
+    của mình nó flexible hơn 
+    - Chỉ dùng cho function components
+    - component trở nên đơn giản và dễ hiểu 
+        + khoong bị chia logic ra như method trong lifecycle của class component 
+        + Không cần sử dụng this
+    - Sử dugj hooks khi nào
+        - dự án mới=>Hook 
+        - dự án cũ :
+            component mới => kết hợp Function component + hooks
+            component cũ => giữ nguyên
+        - nghiệp vụ cần sử dụng OOP => Class componeent
+Mount & Unmount 
+    - Là khoảnh khắc trước khi chèn component vào (Mount)
+    và trước khi tháo component ra (Unmount)
+    - Khi Unmount thì eventListener sẽ không bị unmount chung với component vì nó 
+    có scope là window chứ không phải component
+Các Loại hooks
+- useState(Trạng thái của dữ liệu):
+    + syntax :  const [counter, setCounter] = useState(1);
+    + Dùng khi muốn dữ liệu thay đổi thì giao diện tự động 
+    được cập nhật (Render lại theo dữ liệu)
+    + Sau khi gọi setCounter  thì nó sẽ load lại tk function component mà gọi nó
+    và cập nhật data lại 
+    + initial state chỉ truyền cho lần đầu
+    + có thể chèn callback để làm initial state
+    + state có thể là kiểu dữ liệu gì cũng được
+
+- useEfect :  
+    1. useEffect (callback)
+        - gọi callback  mỗi khi component re-render
+        - gọi callback sau khi componennt thêm element vào dom
+    2. useEffect(callback, []) 
+        - chỉ gọi callback một lần sau khi component mounted
+        - Được sử dụng để set event cho các component
+
+    3. useEffect(callback, [deps]) 
+        - gọi lại mỗi khi dependencies  thay đổi và chỉ chạy
+        callback mỗi khi return ra giao diện xong
+        - đổi tab , đổi kênh 
+    - Proccess :
+            1. Cập nhật lại state
+            2. Cập nhật DOM (mutated)
+            3. Render lại UI 
+            4. Gọi cleanup nếu deps thay đổi
+            5. Gọi useEffect callback
+      
+
+    ==> chung:
+        - callback luôn được gọi sau khi component mounted
+        - cleanup function chỉ được gọi trước khi component bị unmounted
+- useLayoutEffect :
+    - Proccess :
+            1. Cập nhật lại state
+            2. Cập nhật DOM (mutated)
+            3. Gọi cleanup nếu deps thay đổi (sync)
+            4. Gọi useEffect callback (sync)
+            5. Render lại UI 
+        ==>useLayoutEffect sẽ gọi lại callback và hàm cleanup 
+        nếu dependency thay đổi sau đó mới render lại UI.
+
+
+
+- useRef 
+    - Khi chúng ta dùng useRef để lưu giá trị, thì khi phải render lại một
+    function component, giá trị đã lưu sẽ không bị thay đổi, mà vẫn giữ được giá trị đã lưu trước đó.
+    - lấy element từ DOM element
+- useCallback 
+    - Giống như useRef nhưng mà thay vì useRef lưu biến ra ngoài component Scope
+    thì useCallback lưu function ra ngoài component Scope
+    - Luôn đi chung với memo 
+    - memo
+        - khi mà giao diện bị thay đổi thì nó mới render lại giao diện 
+        ==> tăng hiệu xuất người dùng 
+        - React.memo được gọi là Higher order component (HOC). Dùng để ghi nhớ các
+        props của một component, quyết định xem có render lại component đó hay không để tối ưu về hiệu năng.
+        - Ngắn gọn React.memo dùng để xử lý component tránh re-render trong tình huống không cần thiết.
+
+- useMemo 
+    - Dùng để tránh  thực hiện lại một logic nào đó không cần thiết
+
+- useReducer 
+- hỗ trợ rât nhiều trong redux
+- giống y chang useState nhưng advanced hơn
+- Nên sử dụng khi có nhiều option để định nghĩa lại một state
+
+- Proccess :
+    1. Init state
+    2. Actions:
+    3. Reducer
+    4. Dispatch
+- useContext 
+    - Đơn giản hóa việc truyền dữ liệu từ component cha xuống component con mà không cần sử dụng 
+    tới props
+- useIperativeHandle :
+
+
+    ==>Chung :
+    Trong ReactJS, có một số hook chính mà bạn có thể sử dụng:
+            1. useState(): Hook này cho phép bạn sử dụng state trong functional component.
+            Ví dụ: const [count, setCount] = useState(0);
+
+            2. useEffect(): Hook này được sử dụng để thực hiện các tác vụ hiệu chỉnh (side effects) sau khi component đã được render.
+            Ví dụ: useEffect(() => {
+                        // Gọi API, tương tác với DOM, hay thực hiện các tác vụ khác...
+                    }, [dependency]);
+
+            3. useContext(): Hook này giúp bạn truy cập context trong React để chia sẻ dữ liệu giữa các component.
+            Ví dụ: const value = useContext(MyContext);
+
+            4. useReducer(): Hook này giúp bạn thực hiện các thay đổi trạng thái phức tạp thông qua việc sử dụng reducer function.
+            Ví dụ: const [state, dispatch] = useReducer(reducer, initialState);
+
+            5. useCallback(): Hook này giúp bạn định nghĩa lại hàm callback mỗi khi dependencies thay đổi.
+            Ví dụ: const memoizedCallback = useCallback(
+                        () => {
+                            doSomething(a, b);
+                        },
+                        [a, b]
+                    );
+
+            6. useMemo(): Hook này giúp bạn định nghĩa lại giá trị tính toán mỗi khi dependencies thay đổi.
+            Ví dụ: const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+Web socket
+    - Là giao thức tạo nên ra Real time application
+Web hook :
+- 
+CSS module 
+    - Khi một dự án lớn, có nhiều component dẫn đến có nhiều file css đi kèm. 
+    - Như vậy trong quá trình viết code CSS bạn sẽ rất khó kiểm soát việc đặt tên cho các class.
+    - Việc dùng CSS Module sẽ giúp bạn không cần quan tâm đến việc bị đặt trùng tên class nữa.
+    - Như vậy các bạn có thể viết code CSS mà không sợ bị ảnh hưởng đến các component khác.
+Redux => giống cơ chế sesion ==> phải học 
+Router ==> giống cơ chế controller ==> học 
+
+Hiểu cách ReactJS hoạt động
+Biết cách tối ưu hiệu năng ứng dụng
+Thành thạo làm việc với RESTful API
+Hiểu rõ ràng Redux workflow
+
+Thành thạo sử dụng Redux vào dự án
+- Như là một Controller trong MVC
+Biết sử dụng redux-thunk middleware
+Xây dựng sản phẩm thực tế (clone Tiktok)
+Triển khai dự án React ra Internet
+Đủ hành trang tự tin apply đi xin việc
+Biết cách Deploy lên Github/Gitlab page
+Nhận chứng chỉ khóa học do F8 cấp
